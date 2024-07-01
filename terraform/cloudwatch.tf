@@ -2,10 +2,10 @@ resource "aws_cloudwatch_metric_alarm" "http_4xx_alarm" {
   alarm_name          = "HTTP4xxAlarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "ApplicationRequest4xx"
+  metric_name         = "ApplicationRequests4xx"
   namespace           = "AWS/ElasticBeanstalk"
   period              = 60
-  statistic           = "Average"
+  statistic           = "Sum"
   threshold           = 5
   alarm_description   = "More than five 4xx Request Errors in 1 minute."
   actions_enabled     = true
