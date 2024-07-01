@@ -15,6 +15,14 @@ resource "aws_iam_role" "lambda_exec_role" {
   })
 }
 
+resource "aws_lambda_permission" "allow_sns" {
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.slack_notification.function_name
+  principal     = "sns.amazonaws.com"
+  source_arn    = aws_sns_topic.alarm_topic.arn
+}
+
 resource "aws_sns_topic_subscription" "lambda_subscription" {
   topic_arn = aws_sns_topic.alarm_topic.arn
   protocol  = "lambda"
@@ -37,6 +45,11 @@ resource "aws_iam_role_policy" "lambda_exec_policy" {
         Effect   = "Allow",
         Resource = "arn:aws:logs:*:*:*",
       },
+      {
+        Action = "sns:Publish",
+        Effect = "Allow",
+        Resource = aws_sns_topic.alarm_topic.arn,
+      }
     ],
   })
 }
