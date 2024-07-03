@@ -43,4 +43,16 @@ resource "aws_elastic_beanstalk_environment" "tfenvtest" {
     name      = "EnvironmentType"
     value     = "SingleInstance" 
   }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "EC2KeyName"
+    value     = "my-tf-test-ec2-keypair-name"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:healthreporting:system"
+    name      = "SystemType"
+    value     = "enhanced"
+  }
 }

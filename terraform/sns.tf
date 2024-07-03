@@ -1,5 +1,5 @@
 resource "aws_sns_topic" "alarm_topic" {
-  name = "http-4xx-alarm-topic"
+  name = "eb-not-ok-health-alarm-topic"
 }
 
 resource "aws_sns_topic_subscription" "email_subscription" {

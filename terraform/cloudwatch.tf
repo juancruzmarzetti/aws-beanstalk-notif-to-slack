@@ -1,13 +1,13 @@
-resource "aws_cloudwatch_metric_alarm" "http_4xx_alarm" {
-  alarm_name          = "HTTP4xxAlarm"
-  comparison_operator = "GreaterThanThreshold"
+resource "aws_cloudwatch_metric_alarm" "eb_environment_health_alarm" {
+  alarm_name          = "EBEnvironmentHealthAlarm"
+  comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "ApplicationRequests4xx"
+  metric_name         = "Health"
   namespace           = "AWS/ElasticBeanstalk"
-  period              = 60
-  statistic           = "Sum"
-  threshold           = 5
-  alarm_description   = "More than five 4xx Request Errors in 1 minute."
+  period              = 300
+  statistic           = "Average"
+  threshold           = 1
+  alarm_description   = "Alarm when environment health is not Ok"
   actions_enabled     = true
 
   dimensions = {
