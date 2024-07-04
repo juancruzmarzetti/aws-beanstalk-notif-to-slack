@@ -1,18 +1,18 @@
-resource "aws_cloudwatch_metric_alarm" "eb_environment_health_alarm" {
-  alarm_name          = "EBEnvironmentHealthAlarm"
-  comparison_operator = "LessThanThreshold"
-  evaluation_periods  = 1
-  metric_name         = "Health"
-  namespace           = "AWS/ElasticBeanstalk"
-  period              = 300
-  statistic           = "Average"
-  threshold           = 1
-  alarm_description   = "Alarm when environment health is not Ok"
-  actions_enabled     = true
+ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_alarm" {
+  alarm_name = "EC2InstanceCPUUtilization"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods = 1
+  metric_name = "CPUUtilization"
+  namespace = "AWS/EC2"
+  period = 300
+  statistic = "Average"
+  threshold = 70 
 
   dimensions = {
-    EnvironmentName = aws_elastic_beanstalk_environment.tfenvtest.name
+    AutoScalingGroupName = aws_elastic_beanstalk_environment.tfenvtest.name
   }
+
+  alarm_description = "Alarm when CPU exceeds 70% over 5 minutes"
 
   alarm_actions = [
     aws_sns_topic.alarm_topic.arn,
