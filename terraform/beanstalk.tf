@@ -128,4 +128,10 @@ resource "aws_elastic_beanstalk_environment" "tfenvtest" {
     name      = "RetentionInDays"
     value     = 7
   }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "MonitoringInterval"
+    value     = "1 minute" 
+  }
 }
